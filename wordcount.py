@@ -3,9 +3,24 @@ from tkinter import filedialog, mainloop
 from tkinter.constants import CENTER
 from tkinter import messagebox
 from os.path import join
+from tkinter.filedialog import asksaveasfile
+
 root = tk.Tk()
+
 root.geometry("400x400")
 root.title('Upload File')
+
+
+def save(data):
+    files = [('All Files', '*.*'),
+             ('Python Files', '*.py'),
+             ('Text Document', '*.txt')]
+    file = asksaveasfile(mode='w', defaultextension=".txt")
+    if file is None:
+        return
+    # newFile = open(join(outputpath, outputFileName), 'w')
+    file.write(str(data))
+    file.close()
 
 
 def readFile(filename):
@@ -22,16 +37,14 @@ def readFile(filename):
                 word = word.replace('.', '')
                 counter[word] = 1
 
-    filteredItems = dict(sorted(counter.items(), key=lambda x: x[1]))
-    outputpath = "/Users/rawscripter/Desktop/"
-    outputFileName = 'words.txt'
+    outPutData = dict(sorted(counter.items(), key=lambda x: x[1]))
+    # outputpath = "/Users/rawscripter/Desktop/"
+    # outputFileName = 'words.txt'
 
-    newFile = open(join(outputpath, outputFileName), 'w')
-    newFile.write(str(filteredItems))
-    newFile.close()
     file.close()
-    messagebox.showinfo("File converted successfully",
-                        "Please check your file current folder to get the output file.")
+    save(outPutData)
+    # messagebox.showinfo("File converted successfully",
+    #                     "Please check your file current folder to get the output file.")
 
 
 def getLocalFile():
