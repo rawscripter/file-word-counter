@@ -7,15 +7,13 @@ from tkinter.filedialog import asksaveasfile
 import json
 
 root = tk.Tk()
-
 root.geometry("400x400")
-root.title('Upload File ')
+root.title('Word Counter App')
+
 
 # ask user where to save the file
-
-
 def save(data):
-    file = asksaveasfile(mode='w', defaultextension=".txt")
+    file = asksaveasfile(mode='w', defaultextension=".json")
     if file is None:
         return
     file.write(str(data))
@@ -23,11 +21,10 @@ def save(data):
 
 
 # read file and save it as json file
-
-
 def readFile(filename):
     file = open(filename)
     counter = dict()
+    # loop every line from file
     lines = file.readlines()
     for line in lines:
         words = line.split()
@@ -39,6 +36,7 @@ def readFile(filename):
                 word = word.replace('.', '')
                 counter[word] = 1
     file.close()
+    # sort to ascending order
     outPutData = dict(sorted(counter.items(), key=lambda x: x[1]))
     json_object = json.dumps(outPutData, indent=4)
     # save as json object
@@ -46,16 +44,10 @@ def readFile(filename):
 
 
 # upload file
-
-
 def getLocalFile():
     root = tk.Tk()
-
     root.withdraw()
-
     filePath = filedialog.askopenfilename()
-    # print('File path：', filePath)
-    # return filePath
     readFile(filePath)
 
 
