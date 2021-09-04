@@ -4,11 +4,12 @@ from tkinter.constants import CENTER
 from tkinter import messagebox
 from os.path import join
 from tkinter.filedialog import asksaveasfile
+import json
 
 root = tk.Tk()
 
 root.geometry("400x400")
-root.title('Upload File')
+root.title('Upload File ')
 
 # ask user where to save the file
 
@@ -37,11 +38,11 @@ def readFile(filename):
                 word = word.replace(',', '')
                 word = word.replace('.', '')
                 counter[word] = 1
-
-    outPutData = dict(sorted(counter.items(), key=lambda x: x[1]))
     file.close()
+    outPutData = dict(sorted(counter.items(), key=lambda x: x[1]))
+    json_object = json.dumps(outPutData, indent=4)
     # save as json object
-    save(outPutData)
+    save(json_object)
 
 
 # upload file
