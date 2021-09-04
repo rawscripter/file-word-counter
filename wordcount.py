@@ -10,17 +10,18 @@ root = tk.Tk()
 root.geometry("400x400")
 root.title('Upload File')
 
+# ask user where to save the file
+
 
 def save(data):
-    files = [('All Files', '*.*'),
-             ('Python Files', '*.py'),
-             ('Text Document', '*.txt')]
     file = asksaveasfile(mode='w', defaultextension=".txt")
     if file is None:
         return
-    # newFile = open(join(outputpath, outputFileName), 'w')
     file.write(str(data))
     file.close()
+
+
+# read file and save it as json file
 
 
 def readFile(filename):
@@ -38,13 +39,12 @@ def readFile(filename):
                 counter[word] = 1
 
     outPutData = dict(sorted(counter.items(), key=lambda x: x[1]))
-    # outputpath = "/Users/rawscripter/Desktop/"
-    # outputFileName = 'words.txt'
-
     file.close()
+    # save as json object
     save(outPutData)
-    # messagebox.showinfo("File converted successfully",
-    #                     "Please check your file current folder to get the output file.")
+
+
+# upload file
 
 
 def getLocalFile():
@@ -58,6 +58,7 @@ def getLocalFile():
     readFile(filePath)
 
 
+# file upload button
 fileUploadButton = tk.Button(
     text="Upload File", padx=20, pady=20, command=getLocalFile)
 
